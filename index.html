@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>جداول المعلمين</title>
+  <style>
+    body { font-family: Tahoma, sans-serif; text-align: center; margin-top: 50px; }
+    input, button { padding: 10px; font-size: 16px; }
+    #result { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h2>عرض جدول المعلم</h2>
+  <p>أدخل رقم الهوية:</p>
+  <input type="text" id="idInput" placeholder="رقم الهوية">
+  <button onclick="checkId()">عرض الجدول</button>
+  <div id="result"></div>
+
+  <script>
+    // قاعدة بيانات مبسطة: رقم هوية → رابط الجدول
+    const teachers = {
+      "1024112342": "https://example.com/files/teacher1.pdf",
+      "1027272226": "https://example.com/files/teacher2.pdf",
+      "1066508944": "https://example.com/files/teacher3.pdf",
+	  "1081113050": "https://example.com/files/teacher3.pdf",
+	  "1017704410": "https://example.com/files/teacher3.pdf",
+	  "1061933717": "https://example.com/files/teacher3.pdf",
+	  "1003401021": "https://example.com/files/teacher3.pdf",
+	  "1017125087": "https://example.com/files/teacher3.pdf",
+	  "1006807182": "https://example.com/files/teacher3.pdf",
+	  "1036650461": "https://example.com/files/teacher3.pdf",
+	  "1066377688": "https://example.com/files/teacher3.pdf",
+	  "1043501897": "https://example.com/files/teacher3.pdf",
+	  "1045392220": "https://example.com/files/teacher3.pdf",
+	  "1014287666": "https://example.com/files/teacher3.pdf",
+	  "1017428945": "https://example.com/files/teacher3.pdf",
+	  "1040990226": "https://example.com/files/teacher3.pdf",
+	  "1020045413": "https://example.com/files/teacher3.pdf",
+	  "1010218848": "https://example.com/files/teacher3.pdf",
+	  "1002386199": "https://example.com/files/teacher3.pdf",
+	  "299861829": "https://example.com/files/teacher3.pdf",
+	  "1036358149": "https://example.com/files/teacher3.pdf",
+	  "1051840062": "https://example.com/files/teacher3.pdf",
+	  "1027296936": "https://example.com/files/teacher3.pdf",
+	  "1014895682": "https://example.com/files/teacher3.pdf",
+	  "1065993519": "https://example.com/files/teacher3.pdf",
+	  "1001621760": "https://example.com/files/teacher3.pdf",
+	  "1022711137": "https://example.com/files/teacher3.pdf",
+	  "1021453665": "https://example.com/files/teacher3.pdf",
+	  "1014667222": "https://example.com/files/teacher3.pdf",
+	  "1042523637": "https://example.com/files/teacher3.pdf",
+	  "1020398515": "https://example.com/files/teacher3.pdf",
+	  "1059913341": "https://example.com/files/teacher3.pdf",
+	  "1045164512": "https://example.com/files/teacher3.pdf",
+	  "1076879764": "https://example.com/files/teacher3.pdf",
+	  "1011834247": "https://example.com/files/teacher3.pdf",
+	  "1072406257": "https://example.com/files/teacher3.pdf",
+	  "1037357090": "https://example.com/files/teacher3.pdf",
+	  "1042427581": "https://example.com/files/teacher3.pdf",
+	  "1060423348": "https://example.com/files/teacher3.pdf",
+	  "1017014216": "https://example.com/files/teacher3.pdf",
+	  "1042273712": "https://example.com/files/teacher3.pdf",
+	  "1055669202": "https://example.com/files/teacher3.pdf",
+	  "1032210716": "https://example.com/files/teacher3.pdf",
+	  "1033050368": "https://example.com/files/teacher3.pdf",
+	  "1022259467": "https://example.com/files/teacher3.pdf",
+	  "1058214741": "https://example.com/files/teacher3.pdf",
+	  "1031259896": "https://example.com/files/teacher3.pdf",
+	  "1032352955": "https://example.com/files/teacher3.pdf",
+	  "1056216144": "https://example.com/files/teacher3.pdf",
+	  "1029593595": "https://example.com/files/teacher3.pdf",
+	  "1018330207": "https://example.com/files/teacher3.pdf",
+	  "1034139236": "https://example.com/files/teacher3.pdf",
+	  "1082754225": "https://example.com/files/teacher3.pdf",
+	  "1009453919": "https://example.com/files/teacher3.pdf",
+	  "1001154036": "https://example.com/files/teacher3.pdf",
+	  "1061302962": "https://example.com/files/teacher3.pdf",
+	  "1014894958": "https://example.com/files/teacher3.pdf",
+	  "1063230211": "https://example.com/files/teacher3.pdf",
+	  "1019181310": "https://example.com/files/teacher3.pdf",
+	  "1011834262": "https://example.com/files/teacher3.pdf",
+	  "1059452944": "https://example.com/files/teacher3.pdf",
+	  "1033786649": "https://example.com/files/teacher3.pdf",
+	  "1069348348": "https://example.com/files/teacher3.pdf",
+	  "1060215702": "https://example.com/files/teacher3.pdf",
+	  "1113065898": "https://example.com/files/teacher3.pdf",
+	  "1088320732": "https://example.com/files/teacher3.pdf",
+	  "1019743564": "https://example.com/files/teacher3.pdf",
+	  "1004244115": "https://example.com/files/teacher3.pdf",
+	  "1085880050": "https://example.com/files/teacher3.pdf",
+	  "1003381207": "https://example.com/files/teacher3.pdf",
+	  "1044054730": "https://example.com/files/teacher3.pdf",
+	  "1053852818": "https://example.com/files/teacher3.pdf",
+	  "1061681225": "https://example.com/files/teacher3.pdf",
+	  "1087006225": "https://example.com/files/teacher3.pdf",
+	  
+	  
+    };
+
+    function checkId() {
+      const id = document.getElementById("idInput").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      if (teachers[id]) {
+        resultDiv.innerHTML = `<a href="${teachers[id]}" target="_blank">📂 اضغط هنا لفتح جدولك</a>`;
+      } else {
+        resultDiv.textContent = "❌ رقم الهوية غير مسجل";
+      }
+    }
+  </script>
+</body>
+</html>
